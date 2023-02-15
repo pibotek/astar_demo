@@ -1,0 +1,16 @@
+---
+BasedOnStyle: Google
+IndentWidth: 2
+ColumnLimit: 0
+---
+Language: Cpp
+# Force pointers to the type for C++.
+DerivePointerAlignment: false
+PointerAlignment: Left
+SortIncludes: false
+AllowShortBlocksOnASingleLine: false
+---
+Language: Proto
+# Don't format .proto files.
+DisableFormat: false
+IndentWidth: 2
