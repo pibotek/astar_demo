@@ -84,7 +84,7 @@ void Display(const cv::Mat& map_data,
   }
 
   cv::imshow("planner", img);
-  cv::moveWindow("planner",200,200);
+  cv::moveWindow("planner", 200, 200);
 
-  cv::waitKey(10000 / (ROWS * COLS));  // 跟据大小调整延时
+  cv::waitKey(1);
 }

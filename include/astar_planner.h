@@ -1,21 +1,12 @@
 #ifndef NAVIGATION_ASTAR_PLANNER_H_
 #define NAVIGATION_ASTAR_PLANNER_H_
 
+#include "planner.h"
 #include <queue>
 #include <functional>
 #include <unordered_map>
-#include <opencv2/opencv.hpp>
-using namespace cv;
 
 namespace navigation {
-
-using PlannerAction = std::function<void(const Mat&, const Point, const Point, const std::vector<Point>&, const std::vector<Point>&)>;
-
-// map grid val
-static const unsigned char kNoInformation = 255;
-static const unsigned char kLethalObstacle = 254;
-static const unsigned char kInscribedInflatedObstacle = 253;
-static const unsigned char kFreeSpace = 0;
 
 const static int kLineCost = 10;
 const static int kCornerCost = 14;
@@ -52,12 +43,12 @@ class Grid {
   bool is_close_ = false;
 };
 
-class AStarPlanner {
+class AStarPlanner : public Planner {
  public:
   AStarPlanner();
   virtual ~AStarPlanner();
 
-  bool Plan(const Mat& cost_map, const Point& start_point, const Point& end_point, std::vector<Point>& path, PlannerAction planner_action);
+  bool Plan(const Mat& cost_map, const Point& start_point, const Point& end_point, std::vector<Point>& path, PlannerAction planner_action) override;
 
  private:
   float CalcG(const Point& start_point, const Point& current_point, float parent_g = 0.0f);
@@ -68,10 +59,9 @@ class AStarPlanner {
   bool Point2Index(const Point& point, int& index);
   bool Index2Point(int index, Point& point);
 
-
   bool GetPathFromGrid(const Point& start_point, const Point& end_point, std::vector<Point>& path);
 
-private:
+ private:
   inline bool InRange(const Mat& image, int mx, int my) {
     return (mx >= 0 && mx < image.cols && my >= 0 && my < image.rows);
   }
@@ -98,9 +88,6 @@ private:
 
   // neighbors
   std::vector<Point> neighbors_;
-
-  // map
-  Mat cost_map_;
 
   struct greater {
     bool operator()(const Grid& g1, const Grid& g2) const {

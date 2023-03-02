@@ -2,10 +2,17 @@ cmake_minimum_required(VERSION 3.5.1)
 
 project(planner_test)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 option(USE_MINI_SAMPLE "use mini sample as input" OFF)
-option(DEBUG_PLANNER_DETAIL "debug planner detail" OFF)
+option(DEBUG_PLANNER_DETAIL "debug planner detail" ON)
+option(USE_THETA_STAR "use theta star" OFF)
+
+if (USE_THETA_STAR)
+    add_compile_definitions(USE_THETA_STAR=1)
+else()
+    add_compile_definitions(USE_THETA_STAR=0)
+endif()
 
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
